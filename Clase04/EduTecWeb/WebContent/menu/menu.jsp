@@ -6,7 +6,7 @@
 		<li><a href="#">Procesos</a>
 			<ul>
 				<li><a href="javascript: cargarPagina('ProgCursoLoad');">Programar Curso</a></li>
-				<li><a href="#">Horizontal CSS Menus</a></li>
+				<li><a href="javascript: cargarPagina('MatriculaLoad');">Matricula</a></li>
 				<li><a href="#">Vertical CSS Menus</a></li>
 				<li><a href="#">Dreamweaver Menus</a></li>
 		   </ul>
