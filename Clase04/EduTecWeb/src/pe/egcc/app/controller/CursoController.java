@@ -2,6 +2,7 @@ package pe.egcc.app.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,13 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import pe.egcc.app.domain.CursoProgramado;
 import pe.egcc.app.dto.ComboDto;
 import pe.egcc.app.dto.MensajeDto;
 import pe.egcc.app.service.CombosService;
 import pe.egcc.app.service.CursoService;
 
-@WebServlet({"/ProgCursoLoad","/ProgCursoSave","/MatriculaLoad"})
+@WebServlet({"/ProgCursoLoad","/ProgCursoSave","/MatriculaLoad",
+  "/GetCursosPorCiclo"})
 public class CursoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,10 +35,36 @@ public class CursoController extends HttpServlet {
 	    progCursoSave(request,response);
     } else if(path.equals("/MatriculaLoad")){
       matriculaLoad(request,response);
+    } else if(path.equals("/GetCursosPorCiclo")){
+      getCursosPorCiclo(request,response);
     }
 	  
 	  
 	}
+
+
+  private void getCursosPorCiclo(HttpServletRequest request, 
+      HttpServletResponse response) throws IOException {
+    
+    List<ComboDto> lstCursos = null;
+    try {
+      // Datos
+      String ciclo = request.getParameter("ciclo");
+      System.err.println("Ciclo: " + ciclo);
+      // Proceso
+      CombosService service = new CombosService();
+      lstCursos = service.getCursos(ciclo);
+    } catch (Exception e) {
+      lstCursos = new ArrayList<>();
+    }
+    
+    Gson gson = new Gson();
+    String textoJson = gson.toJson(lstCursos);
+    
+    System.err.println("TEXT: " + textoJson);
+    UtilController.generaSalida(response, textoJson);
+    
+  }
 
 
   private void matriculaLoad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

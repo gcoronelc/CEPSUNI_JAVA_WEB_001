@@ -27,5 +27,17 @@ public class UtilController {
     out.close(); 
     
   }
+  
+  public static void generaSalida
+  (HttpServletResponse response, String textoJson) 
+  throws IOException {
+
+    // response.setContentType("text/plain; charset=ISO-8859-2");
+    response.setContentType("application/json; charset=ISO-8859-2");
+    PrintWriter out = response.getWriter(); 
+    out.print(textoJson); 
+    out.close(); 
+    
+  }
 
 }

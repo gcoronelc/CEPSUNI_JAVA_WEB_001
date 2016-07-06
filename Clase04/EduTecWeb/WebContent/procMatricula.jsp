@@ -42,5 +42,33 @@
       </tr>
     </table>
   </form>  
+  
+  <script type="text/javascript">
+  
+  $("#ciclo").change(function() {
+	  var curso = $("#curso");
+	  curso.empty();
+	  var ciclo = $("#ciclo").val();
+	  if (ciclo == '0') {
+		  return;
+	  }
+	  var data = "ciclo=" + ciclo;
+	  curso.append('<option value="">Cargando...</option>').val('');
+	  $.post("GetCursosPorCiclo", data, function(arreglo) {
+		  curso.empty();
+			 if(arreglo.length > 0){
+			   curso.append("<option value='0'>[Seleccione curso]</option>");
+			 } else {
+			   curso.append("<option value='0'>[No hay cursos]</option>");
+			 }
+			 for (var i = 0; i < arreglo.length; i++) {
+			   var item = "<option value='" + arreglo[i].codigo + "'>" + arreglo[i].texto + "</option>";
+			   curso.append(item);
+			 }
+	  });
+	});
+  
+  </script>
+  
 </body>
 </html>
